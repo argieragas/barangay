@@ -1,0 +1,26 @@
+
+<h2 mat-dialog-title>Blotter Form</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="flex justify-between">
+    <mat-form-field class="w-[49%]">
+      <mat-label>Full name</mat-label>
+      <mat-select [(value)]="selectedFood">
+        <mat-option [value]="option.value" *ngFor="let option of foods">{{ option.viewValue }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-[49%]">
+      <mat-label>Type</mat-label>
+      <input matInput placeholder="Ex. Theft">
+    </mat-form-field>
+  </div>
+
+  <mat-form-field class="w-[100%]">
+    <mat-label>Details of report</mat-label>
+    <textarea matInput rows="5" placeholder="Ex. He theft my bag..."></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button class="submit" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>
