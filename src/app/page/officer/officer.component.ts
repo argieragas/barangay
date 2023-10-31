@@ -82,7 +82,7 @@ export class OfficerComponent implements AfterViewInit {
         },
       }
     }
-    pdfMake.createPdf(docDefinition).open();
+    pdfMake.createPdf(docDefinition).download();
   }
 
   table(){
