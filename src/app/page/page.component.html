@@ -27,6 +27,12 @@
              <span class="flex-1 ml-3 whitespace-nowrap">Reports</span>
            </a>
         </li>
+        <li [ngClass]="isActive('/map')" class="hover:bg-slate-300 dark:hover:bg-gray-700">
+           <a href="map" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white group">
+            <mat-icon class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">location_on</mat-icon>
+             <span class="flex-1 ml-3 whitespace-nowrap">Map</span>
+           </a>
+        </li>
       </ul>
    </div>
   </mat-drawer>

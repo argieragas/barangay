@@ -3,17 +3,58 @@
 <mat-dialog-content class="mat-typography">
   <div class="flex justify-between">
     <mat-form-field class="w-[49%]">
-      <mat-label>Full name</mat-label>
+      <mat-label>Case Title</mat-label>
       <mat-select [(value)]="selectedFood">
         <mat-option [value]="option.value" *ngFor="let option of foods">{{ option.viewValue }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="w-[49%]">
       <mat-label>Type</mat-label>
-      <input matInput placeholder="Ex. Theft">
+      <mat-select [(value)]="selectedFood">
+        <mat-option [value]="option.value" *ngFor="let option of foods">{{ option.viewValue }}</mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
-
+  
+  <span class="text-[#333] dark:text-[#ccc]">Complainant Details</span>
+  <div class="grid grid-cols-3 gap-4">
+    <mat-form-field>
+      <mat-label>First name</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Middle name</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Last name</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </div>
+  <mat-form-field class="w-[100%]">
+    <mat-label>Address</mat-label>
+    <input matInput>
+  </mat-form-field>
+  
+  <span class="text-[#333] dark:text-[#ccc]">Complaint Details</span>
+  <div class="grid grid-cols-3 gap-4">
+    <mat-form-field>
+      <mat-label>First name</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Middle name</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Last name</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </div>
+  <mat-form-field class="w-[100%]">
+    <mat-label>Address</mat-label>
+    <input matInput>
+  </mat-form-field>
   <mat-form-field class="w-[100%]">
     <mat-label>Details of report</mat-label>
     <textarea matInput rows="5" placeholder="Ex. He theft my bag..."></textarea>

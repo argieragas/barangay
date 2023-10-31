@@ -2,3 +2,15 @@
   background-color: rgb(29 78 216)!important;
   color: rgb(247, 247, 247)!important
 }
+
+.mat-accent{
+  --mdc-icon-button-icon-color: #607d8b!important;
+  --mat-mdc-button-persistent-ripple-color: #607d8b!important;
+  --mat-mdc-button-ripple-color: rgba(96, 125, 139, 0.1)!important;
+}
+
+.mat-primary{
+  --mdc-icon-button-icon-color: #e91e63!important;
+  --mat-mdc-button-persistent-ripple-color: #e91e63!important;
+  --mat-mdc-button-ripple-color: rgba(233, 30, 99, 0.1)!important
+}

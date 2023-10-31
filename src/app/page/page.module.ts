@@ -19,6 +19,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {FormsModule} from '@angular/forms';
 import {NgFor} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
+import { OfficerDialogComponent } from './officer-dialog/officer-dialog.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import {MatSelectModule} from '@angular/material/select';
     OfficerComponent,
     CasesComponent,
     ReportComponent,
-    CaseDialogComponent
+    CaseDialogComponent,
+    OfficerDialogComponent,
+    MapComponent
   ],
   imports: [
     CommonModule,

@@ -7,6 +7,7 @@ import { DashboardComponent } from './page/dashboard/dashboard.component';
 import { CasesComponent } from './page/cases/cases.component';
 import { OfficerComponent } from './page/officer/officer.component';
 import { ReportComponent } from './page/report/report.component';
+import { MapComponent } from './page/map/map.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
       {path: '', component: DashboardComponent},
       {path: 'cases', component: CasesComponent},
       {path: 'officers', component: OfficerComponent},
-      {path: 'reports', component: ReportComponent}
+      {path: 'reports', component: ReportComponent},
+      {path: 'map', component: MapComponent}
     ]
   }
 ];

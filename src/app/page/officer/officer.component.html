@@ -1,10 +1,10 @@
-<h2 class="dark:text-slate-100 text-slate-800">List of Officials in Barangay Dahican</h2>
+<h2 class="dark:text-slate-100 text-slate-800 mb-2">LIST OF OFFICIALS IN BARANGAY DAHICAN</h2>
 <div class="w-[100%] flex justify-between">
-  <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+  <button type="button" mat-button (click)="generatePDF()" class="custom-btn">
     <mat-icon class="mr-1">launch</mat-icon>
     Export
   </button>
-  <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+  <button type="button" mat-button (click)="openDialog()" class="custom-btn">
     <mat-icon class="mr-1">person_add</mat-icon>
     Add Officer
   </button>
@@ -41,8 +41,8 @@
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Action </th>
-      <td mat-cell *matCellDef="let element">
+      <th class="w-[150px]" mat-header-cell *matHeaderCellDef> Action </th>
+      <td class="w-[150px]" mat-cell *matCellDef="let element">
         <button mat-icon-button color="link" aria-label="Example icon button with a home icon">
           <mat-icon>remove_red_eye</mat-icon>
         </button>
@@ -59,8 +59,6 @@
       <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
     </tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]"
-                 showFirstLastButtons
-                 aria-label="Select page of periodic elements">
+  <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons aria-label="Select page of periodic elements">
   </mat-paginator>
 </div>
