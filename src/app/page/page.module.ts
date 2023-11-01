@@ -21,6 +21,7 @@ import {NgFor} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import { OfficerDialogComponent } from './officer-dialog/officer-dialog.component';
 import { MapComponent } from './map/map.component';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MapComponent } from './map/map.component';
     MatDialogModule,
     MatMenuModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    LeafletModule
   ]
 })
 export class PageModule { }
