@@ -17,7 +17,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { CaseDialogComponent } from './case-dialog/case-dialog.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {FormsModule} from '@angular/forms';
-import {NgFor} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import { OfficerDialogComponent } from './officer-dialog/officer-dialog.component';
 import { MapComponent } from './map/map.component';

@@ -5,37 +5,23 @@ import * as L from 'leaflet';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
-  centroid: L.LatLngExpression = [42.3601, -71.0589]; 
-  map: L.Map 
-  initMap(): void {
-    this.map = L.map('map', {
-      center: this.centroid,
-      zoom: 12
-    });
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 10,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    // create 5 random jitteries and add them to map
-    const jittery = Array(5).fill(this.centroid).map( 
-        x => [x[0] + (Math.random() - .5)/10, x[1] + (Math.random() - .5)/10 ]
-      ).map(
-        x => L.marker(x as L.LatLngExpression)
-      ).forEach(
-        x => x.addTo(this.map)
-      );
-
-    tiles.addTo(this.map);
-  
+export class MapComponent implements OnInit{
+  options = {
+    layers: [
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      })
+    ],
+    zoom: 10,
+    center: L.latLng(6.930830, 126.280320)
   }
 
-  constructor() { }
+  open = false
 
   ngOnInit(): void {
-    this.initMap();
+    setTimeout(() => {
+      this.open = true
+    }, 100);
   }
-
 }
