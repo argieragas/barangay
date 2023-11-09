@@ -1,3 +1,4 @@
 <div class="map-container">
-  <div *ngIf="open" id="map" leaflet [leafletOptions]="options"></div>
+  <div *ngIf="open" id="map" leaflet [leafletOptions]="options"
+  (leafletMapReady)="onMapReady($event)"></div>
 </div>
