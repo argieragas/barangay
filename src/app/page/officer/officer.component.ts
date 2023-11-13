@@ -50,7 +50,6 @@ export class OfficerComponent implements AfterViewInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(OfficerDialogComponent);
-    console.log(`Dialog result: `);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

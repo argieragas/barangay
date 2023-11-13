@@ -21,6 +21,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { OfficerDialogComponent } from './officer-dialog/officer-dialog.component';
 import { MapComponent } from './map/map.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
     ReportComponent,
     CaseDialogComponent,
     OfficerDialogComponent,
-    MapComponent
+    MapComponent,
+    ReportDialogComponent
   ],
   imports: [
     CommonModule,

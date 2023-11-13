@@ -1,273 +1,121 @@
-import { Component } from '@angular/core';
-import { Resume, Experience, Education, Skill } from '../../pdfData';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatDialog} from '@angular/material/dialog';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
+
+
+export interface PeriodicElement {
+  no: number;
+  involve: String,
+  incident: String,
+  location: String;
+  date: String;
+}
+const ELEMENT_DATA: PeriodicElement[] = [
+  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"},
+  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"},
+  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"},
+  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"},
+  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"},
+  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"}
+]
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })
-export class ReportComponent {
 
-  resume = new Resume();
+export class ReportComponent implements AfterViewInit {
+  displayedColumns: String[] = ['no', 'involved', 'incident', 'location', 'date', 'action']
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA)
 
-  degrees = ['B.E.', 'M.E.', 'B.Com', 'M.Com'];
+  @ViewChild(MatPaginator) paginator: any;
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
   }
 
-  addExperience() {
-    this.resume.experiences.push(new Experience());
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
-  addEducation() {
-    this.resume.educations.push(new Education());
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  generatePdf(action = 'open') {
-    console.log(pdfMake);
-    const documentDefinition: any = this.getDocumentDefinition();
-
-    switch (action) {
-      case 'open': pdfMake.createPdf(documentDefinition).open(); break;
-      case 'print': pdfMake.createPdf(documentDefinition).print(); break;
-      case 'download': pdfMake.createPdf(documentDefinition).download(); break;
-
-      default: pdfMake.createPdf(documentDefinition).open(); break;
-    }
-
+  openDialog() {
+    const dialogRef = this.dialog.open(ReportDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
-
-  resetForm() {
-    this.resume = new Resume();
-  }
-
-  getDocumentDefinition() {
-    sessionStorage.setItem('resume', JSON.stringify(this.resume));
-    return {
+  generatePDF(){
+    let docDefinition: any = {
       content: [
         {
-          text: 'RESUME',
+          text: 'List of Barangay Officers',
           bold: true,
-          fontSize: 20,
+          fontSize: 15,
           alignment: 'center',
           margin: [0, 0, 0, 20]
         },
-        {
-          columns: [
-            [{
-              text: this.resume.name,
-              style: 'name'
-            },
-            {
-              text: this.resume.address
-            },
-            {
-              text: 'Email : ' + this.resume.email,
-            },
-            {
-              text: 'Contant No : ' + this.resume.contactNo,
-            },
-            {
-              text: 'GitHub: ' + this.resume.socialProfile,
-              link: this.resume.socialProfile,
-              color: 'blue',
-            }
-            ],
-            [
-              this.getProfilePicObject()
-            ]
-          ]
-        },
-        {
-          text: 'Skills',
-          style: 'header'
-        },
-        {
-          columns : [
-            {
-              ul : [
-                ...this.resume.skills.filter((value, index) => index % 3 === 0).map(s => s.value)
-              ]
-            },
-            {
-              ul : [
-                ...this.resume.skills.filter((value, index) => index % 3 === 1).map(s => s.value)
-              ]
-            },
-            {
-              ul : [
-                ...this.resume.skills.filter((value, index) => index % 3 === 2).map(s => s.value)
-              ]
-            }
-          ]
-        },
-        {
-          text: 'Experience',
-          style: 'header'
-        },
-        this.getExperienceObject(this.resume.experiences),
-
-        {
-          text: 'Education',
-          style: 'header'
-        },
-        this.getEducationObject(this.resume.educations),
-        {
-          text: 'Other Details',
-          style: 'header'
-        },
-        {
-          text: this.resume.otherDetails
-        },
-        {
-          text: 'Signature',
-          style: 'sign'
-        },
-        {
-          columns : [
-              { qr: this.resume.name + ', Contact No : ' + this.resume.contactNo, fit : 100 },
-              {
-              text: `(${this.resume.name})`,
-              alignment: 'right',
-              }
-          ]
-        }
+        this.table()
       ],
+      pageOrientation: 'landscape',
       info: {
-        title: this.resume.name + '_RESUME',
-        author: this.resume.name,
-        subject: 'RESUME',
-        keywords: 'RESUME, ONLINE RESUME',
+        title: 'Case Data',
+        auhor: 'Brgy. Dahican',
+        subject: 'Case',
+        keywords: 'Cases report'
       },
-        styles: {
-          header: {
-            fontSize: 18,
-            bold: true,
-            margin: [0, 20, 0, 10],
-            decoration: 'underline'
-          },
-          name: {
-            fontSize: 16,
-            bold: true
-          },
-          jobTitle: {
-            fontSize: 14,
-            bold: true,
-            italics: true
-          },
-          sign: {
-            margin: [0, 50, 0, 10],
-            alignment: 'right',
-            italics: true
-          },
-          tableHeader: {
-            bold: true,
-            alignment: 'center'
-          }
-        }
-    };
-  }
-
-  getExperienceObject(experiences: Experience[]) {
-
-    const exs: any = [];
-
-    experiences.forEach(experience => {
-      exs.push(
-        [{
-          columns: [
-            [{
-              text: experience.jobTitle,
-              style: 'jobTitle'
-            },
-            {
-              text: experience.employer,
-            },
-            {
-              text: experience.jobDescription,
-            }],
-            {
-              text: 'Experience : ' + experience.experience + ' Months',
-              alignment: 'right'
-            }
-          ]
-        }]
-      );
-    });
-
-    return {
-      table: {
-        widths: ['*'],
-        body: [
-          ...exs
-        ]
+      styles:{
+        tableHeader: {
+          bold: true,
+          alignment: 'center'
+        },
       }
-    };
+    }
+    pdfMake.createPdf(docDefinition).download();
   }
 
-  getEducationObject(educations: Education[]) {
+  table(){
     return {
       table: {
-        widths: ['*', '*', '*', '*'],
-        body: [
-          [{
-            text: 'Degree',
-            style: 'tableHeader'
-          },
-          {
-            text: 'College',
-            style: 'tableHeader'
-          },
-          {
-            text: 'Passing Year',
-            style: 'tableHeader'
-          },
-          {
-            text: 'Result',
-            style: 'tableHeader'
-          },
+        widths: ['20%', '30%', '30%', '20%'],
+        body:[
+          [
+            {
+              text: 'Person Involved',
+              style: 'tableHeader'
+            },
+            {
+              text: 'Incident',
+              style: 'tableHeader'
+            },
+            {
+              text: 'Location',
+              style: 'tableHeader'
+            },{
+              text: 'Date',
+              style: 'tableHeader'
+            }
           ],
-          ...educations.map(ed => {
-            return [ed.degree, ed.college, ed.passingYear, ed.percentage];
+          ...ELEMENT_DATA.map(ed => {
+            return [
+              ed.involve,
+              ed.incident,
+              ed.location,
+              ed.date
+            ]
           })
         ]
       }
-    };
-  }
-
-  getProfilePicObject() {
-    if (this.resume.profilePic) {
-      return {
-        image: this.resume.profilePic ,
-        width: 75,
-        alignment : 'right'
-      };
     }
-    return null;
-  }
 
-  fileChanged(e: any) {
-    const file = e.target.files[0];
-    this.getBase64(file);
   }
-
-  getBase64(file: any) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      console.log(reader.result);
-      this.resume.profilePic = reader.result as string;
-    };
-    reader.onerror = (error) => {
-      console.log('Error: ', error);
-    };
-  }
-
-  addSkill() {
-    this.resume.skills.push(new Skill());
-  }
-
 }
