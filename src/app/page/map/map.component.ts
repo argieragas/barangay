@@ -41,39 +41,10 @@ export class MapComponent implements OnInit{
     newMarker.addTo(this.map);
   }
 
-  sample(text: String): Promise<String> {
-    return
-  }
-
   onMapReady(map: L.Map) {
     this.map = map;
     (L.Control as any).geocoder().addTo(map)
-    map.on('click', (e)=> {
-      var popup = L.popup()
-      .setLatLng(e.latlng)
-      .setContent('<p>Pinned</p>')
-      .openOn(map);
-      this.reverseGeocode(e.latlng.lat, e.latlng.lng)
-        .then(locationName => {
-          // Display the location name
-          alert('Location Name: ' + locationName);
-        })
-        .catch(error => console.error('Error:', error));
-    });
   }
-
-  private reverseGeocode(lat: number, lng: number): Promise<string> {
-    const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
-
-    return fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => data.display_name)
-      .catch(error => {
-        console.error('Error:', error);
-        throw error;
-      });
-  }
-
   open = false
 
   ngOnInit(): void {

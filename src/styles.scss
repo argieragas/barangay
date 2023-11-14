@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 
+
 @include mat.core();
 
 // Define a dark theme
@@ -31,7 +32,6 @@ $light-theme: mat.define-light-theme((
 
 @import '../node_modules/@syncfusion/ej2-material-theme/styles/material.css';
 @import "../node_modules/leaflet/dist/leaflet.css";
-@import "../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css";
 /* You can add global styles to this file, and also import other style files */
 @tailwind base;
 @tailwind components;
@@ -43,3 +43,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @import '@fortawesome/fontawesome-free/scss/solid.scss';
 @import '@fortawesome/fontawesome-free/scss/regular.scss';
 @import '@fortawesome/fontawesome-free/scss/brands.scss';
+
+@import "../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css";

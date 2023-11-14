@@ -22,7 +22,7 @@ import { OfficerDialogComponent } from './officer-dialog/officer-dialog.componen
 import { MapComponent } from './map/map.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
-
+import { MapDialogComponent } from '../page/map-dialog/map-dialog.component';
 @NgModule({
   declarations: [
     PageComponent,
@@ -33,7 +33,8 @@ import { ReportDialogComponent } from './report-dialog/report-dialog.component';
     CaseDialogComponent,
     OfficerDialogComponent,
     MapComponent,
-    ReportDialogComponent
+    ReportDialogComponent,
+    MapDialogComponent
   ],
   imports: [
     CommonModule,
