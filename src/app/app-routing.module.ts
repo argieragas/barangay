@@ -8,6 +8,7 @@ import { CasesComponent } from './page/cases/cases.component';
 import { OfficerComponent } from './page/officer/officer.component';
 import { ReportComponent } from './page/report/report.component';
 import { MapComponent } from './page/map/map.component';
+import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
   {
@@ -21,17 +22,37 @@ const routes: Routes = [
     path: '',
     component: PageComponent,
     children: [
-      {path: '', component: DashboardComponent},
-      {path: 'cases', component: CasesComponent},
-      {path: 'officers', component: OfficerComponent},
-      {path: 'reports', component: ReportComponent},
-      {path: 'map', component: MapComponent}
+      {
+        path: '',
+        component: DashboardComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'cases',
+        component: CasesComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'officers',
+        component: OfficerComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'reports',
+        component: ReportComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'map',
+        component: MapComponent,
+        canActivate: [AuthGuard]
+      }
     ]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

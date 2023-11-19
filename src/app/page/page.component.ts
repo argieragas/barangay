@@ -1,5 +1,6 @@
 import { Component, HostBinding, effect, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/client/authentication.service';
 
 @Component({
   selector: 'app-page',
@@ -11,7 +12,7 @@ export class PageComponent {
   routerEvents: any
   url: any
   pageTitle: String = "Dashboard"
-  constructor(private router: Router) {
+  constructor(private router: Router, private authenticationService: AuthenticationService) {
     effect(() => {
       document.body.className = this.darkMode() ? 'dark':'light'
       window.localStorage.setItem('darkMode', JSON.stringify(this.darkMode()))
@@ -29,6 +30,9 @@ export class PageComponent {
     )
   }
 
+  logout(){
+    this.authenticationService.logout()
+  }
 
   isActive(url:any){
     return url == this.url ? 'bg-slate-400 dark:bg-slate-600 rounded-sm':''
