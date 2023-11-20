@@ -1,28 +1,37 @@
 
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/client/authentication.service';
+import { Login, Register } from 'src/utils/data';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  username = ''
-  password = ''
+export class LoginComponent {
+  data: Login = {
+    email: '',
+    password: ''
+  }
+
+  regist: Register = {
+    address: '',
+    email: '',
+    password: '',
+    code: ''
+  }
 
   constructor(private authenticationService: AuthenticationService) {}
 
-  ngOnInit() {
+
+  login() {
+    this.authenticationService.login(this.data)
   }
 
-  public submit() {
-    this.authenticationService.login(
-      this.username,
-      this.password
-    )
+  register(){
+    this.authenticationService.register(this.regist)
   }
+
   links = ['First', 'Second', 'Third'];
   activeLink = this.links[0];
 

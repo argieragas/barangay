@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationClient } from './authentication.client';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
+import { Login, Register } from 'src/utils/data';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class AuthenticationService {
     private router: Router
   ) {}
 
-  public login(username: string, password: string): void {
-    this.authenticationClient.login(username, password).subscribe(
+  public login(data: Login): void {
+    this.authenticationClient.login(data).subscribe(
       (token) => {
         localStorage.setItem(this.tokenKey, token);
         this.router.navigate(['/']);
@@ -28,6 +29,7 @@ export class AuthenticationService {
       }
     );
   }
+
   private showAlert(icon: SweetAlertOptions['icon'], title?: string, text?: string): void {
     Swal.fire({
       icon,
@@ -36,10 +38,9 @@ export class AuthenticationService {
     });
   }
 
-
-  public register(username: string, email: string, password: string): void {
+  public register(data: Register): void {
     this.authenticationClient
-      .register(username, email, password)
+      .register(data)
       .subscribe((token) => {
         localStorage.setItem(this.tokenKey, token);
         this.router.navigate(['/']);
