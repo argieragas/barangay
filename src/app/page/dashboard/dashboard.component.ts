@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 
-export interface PeriodicElement {
+export interface PeriodicElement{
   year: number;
   cases: number;
   killed: number;
@@ -30,5 +30,9 @@ export class DashboardComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  ngOnInit(){
+    
   }
 }

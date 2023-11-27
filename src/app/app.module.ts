@@ -5,8 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PageModule } from './page/page.module';
 import { HttpClientModule } from '@angular/common/http';
+import { PageModule } from './page/page.module';
 @NgModule({
   declarations: [
     AppComponent

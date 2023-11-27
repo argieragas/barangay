@@ -37,7 +37,6 @@ export class CaseDialogComponent {
 
   openMap(type: string){
     const dialogRef = this.dialog.open(MapDialogComponent);
-    console.log(`Dialog result: `);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if(type == 'complaint'){

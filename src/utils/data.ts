@@ -4,8 +4,22 @@ export interface Login {
 }
 
 export interface Register {
-  address: string,
-  email: string,
-  password: string,
-  code: string
+  name: string;
+  address: string;
+  position: string;
+  committee: string;
+  email: string;
+  password: string;
+  code: string;
+  confirmpass: string
+}
+
+
+export interface ReportData {
+  id: number;
+  involved: String;
+  incident: String;
+  location: String;
+  latlng: String;
+  date: String;
 }

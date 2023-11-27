@@ -15,10 +15,14 @@ export class LoginComponent {
   }
 
   regist: Register = {
+    name: '',
     address: '',
+    position: 'unknown',
+    committee: 'unknown',
     email: '',
     password: '',
-    code: ''
+    code: '',
+    confirmpass: ''
   }
 
   constructor(private authenticationService: AuthenticationService) {}
@@ -29,7 +33,9 @@ export class LoginComponent {
   }
 
   register(){
-    this.authenticationService.register(this.regist)
+    if(this.regist.password == this.regist.confirmpass){
+      this.authenticationService.register(this.regist)
+    }
   }
 
   links = ['First', 'Second', 'Third'];

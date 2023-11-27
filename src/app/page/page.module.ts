@@ -23,6 +23,10 @@ import { MapComponent } from './map/map.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 import { MapDialogComponent } from '../page/map-dialog/map-dialog.component';
+import { UpdateComponent } from './update/update.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+
 @NgModule({
   declarations: [
     PageComponent,
@@ -34,7 +38,8 @@ import { MapDialogComponent } from '../page/map-dialog/map-dialog.component';
     OfficerDialogComponent,
     MapComponent,
     ReportDialogComponent,
-    MapDialogComponent
+    MapDialogComponent,
+    UpdateComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +55,9 @@ import { MapDialogComponent } from '../page/map-dialog/map-dialog.component';
     MatMenuModule,
     FormsModule,
     MatSelectModule,
-    LeafletModule
+    LeafletModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class PageModule { }

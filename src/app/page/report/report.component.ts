@@ -1,45 +1,57 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
+import { ServiceData } from 'src/app/client/servicedata.client';
+import { ReportData } from 'src/utils/data';
 
-
-export interface PeriodicElement {
-  no: number;
-  involve: String,
-  incident: String,
-  location: String;
-  date: String;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"},
-  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"},
-  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"},
-  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"},
-  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"},
-  {no: 1, involve: "Prodenciano", incident: "Thieft", location: "Purok Kimbal, Dahican Mati City", date: "Nov 13, 2023"}
-]
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })
 
-export class ReportComponent implements AfterViewInit {
+export class ReportComponent {
+  ELEMENT_DATA: ReportData[] = []
+  dataSource: any
+  ngOnInit(){
+    this.getReport()
+  }
+
+
+  delete(id){
+    this.serviceData.deleteReport(id).subscribe(
+      ()=>{
+        this.getReport()
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+  }
+
+  getReport(){
+    this.serviceData.getReport().subscribe(
+      (data)=>{
+        this.ELEMENT_DATA = data
+        this.dataSource = new MatTableDataSource<ReportData>(data)
+        this.dataSource.paginator = this.paginator
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+  }
+
   displayedColumns: String[] = ['no', 'involved', 'incident', 'location', 'date', 'action']
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA)
 
   @ViewChild(MatPaginator) paginator: any;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private serviceData: ServiceData) {
     (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(event: Event) {
@@ -47,10 +59,12 @@ export class ReportComponent implements AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(ReportDialogComponent);
+  openDialog(type, id) {
+    const dialogRef = this.dialog.open(ReportDialogComponent,{
+      data: {dataType: type, id: id}
+    });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      this.getReport()
     });
   }
 
@@ -105,9 +119,9 @@ export class ReportComponent implements AfterViewInit {
               style: 'tableHeader'
             }
           ],
-          ...ELEMENT_DATA.map(ed => {
+          ...this.ELEMENT_DATA.map(ed => {
             return [
-              ed.involve,
+              ed.involved,
               ed.incident,
               ed.location,
               ed.date

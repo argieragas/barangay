@@ -24,7 +24,6 @@ export class AuthenticationService {
         this.router.navigate(['/']);
       },
       (error) => {
-        console.log(error)
         this.showAlert('warning', error.statusText,'The password you entered is incorrect')
       }
     );
