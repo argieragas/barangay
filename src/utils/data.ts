@@ -23,3 +23,13 @@ export interface ReportData {
   latlng: String;
   date: String;
 }
+
+export interface LocationData {
+  location: string;
+  latlng: string;
+}
+
+export interface ApiResponse {
+  title: string;
+  message: string;
+}

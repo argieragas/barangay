@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import { MatDialogRef } from '@angular/material/dialog';
+import { LocationData } from 'src/utils/data';
 @Component({
   selector: 'app-map-dialog',
   templateUrl: './map-dialog.component.html',
@@ -10,6 +11,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class MapDialogComponent implements OnInit{
   map: L.Map
   open = true
+  locationData: LocationData = {
+    location: '',
+    latlng: ''
+  }
   ngOnInit(): void {
     setTimeout(() => {
       this.open = true
@@ -39,7 +44,9 @@ export class MapDialogComponent implements OnInit{
       this.reverseGeocode(e.latlng.lat, e.latlng.lng)
         .then(locationName => {
           if (window.confirm(locationName)) {
-              this.dialogRef.close(locationName)
+            this.locationData.location = locationName
+            this.locationData.latlng = `${e.latlng.lat}, ${e.latlng.lng}`
+            this.dialogRef.close(this.locationData)
           }
         })
         .catch(error => console.error('Error:', error));
@@ -57,4 +64,5 @@ export class MapDialogComponent implements OnInit{
         throw error;
       });
   }
+  
 }

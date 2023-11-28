@@ -47,7 +47,7 @@
     <ng-container matColumnDef="action">
       <th class="w-[150px]" mat-header-cell *matHeaderCellDef> Action </th>
       <td class="w-[150px]" mat-cell *matCellDef="let element">
-        <button mat-icon-button color="link" (click)="openDialog('Update Report', element.id)" aria-label="Example icon button with a home icon">
+        <button mat-icon-button color="link" (click)="openDialog('Update Report', element)" aria-label="Example icon button with a home icon">
           <mat-icon>remove_red_eye</mat-icon>
         </button>
         <button mat-icon-button color="primary" (click)="delete(element.id)" aria-label="Example icon button with a home icon">
