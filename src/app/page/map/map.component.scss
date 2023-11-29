@@ -7,6 +7,12 @@
   border: 1px solid black;
 }
 
+.legend {
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 #map {
   height: 100%;
   width: 100%;
@@ -20,16 +26,3 @@
   display: block;
 }
 
-
-.legend {
-  background-color: white;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.legend img {
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
-}

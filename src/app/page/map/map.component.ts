@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
+import { GetLocation } from 'src/utils/data';
+import { ServiceData } from 'src/app/client/servicedata.client';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -8,19 +10,11 @@ import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 })
 export class MapComponent implements OnInit{
   map: L.Map
-  markers: L.Layer[] = [];
 
+  constructor(private serviceData: ServiceData){}
+
+  markers: GetLocation[] = []
   popupText = "Some popup text";
-
-  markerIcon = {
-    icon: L.icon({
-      iconSize: [25, 41],
-      iconAnchor: [10, 41],
-      popupAnchor: [2, -40],
-      iconUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png",
-      shadowUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-shadow.png"
-    })
-  };
 
   options = {
     layers: [
@@ -33,12 +27,12 @@ export class MapComponent implements OnInit{
     center: L.latLng(6.930830, 126.280320)
   };
 
-  addMarker() {
-    const newMarker = L.marker([6.930830, 126.280320], this.markerIcon);
-    newMarker.bindPopup("<b>Marker Information</b>")
-    this.markers.push(newMarker);
-
-    newMarker.addTo(this.map);
+  private addMarkers() {
+    this.markers.forEach(marker => {
+      L.marker([marker.lat, marker.lng], { icon: L.icon({ iconUrl: marker.icon, iconSize: [30, 30] }) })
+        .bindPopup(marker.label)
+        .addTo(this.map);
+    });
   }
 
   onMapReady(map: L.Map) {
@@ -48,11 +42,39 @@ export class MapComponent implements OnInit{
   open = false
 
   ngOnInit(): void {
+    this.serviceData.getLocationReport().subscribe(
+      (response)=>{
+        this.markers = response
+      }
+    )
     setTimeout(() => {
       this.open = true
     }, 100);
     setTimeout(()=>{
-      this.addMarker()
+      this.addMarkers()
+      this.addLegend()
     }, 500)
+  }
+
+
+  private addLegend() {
+    const legend = (L as any).control({ position: 'bottomright' });
+
+    legend.onAdd = () => {
+      const div = L.DomUtil.create('div', 'legend');
+      const labels = [];
+      div.style.backgroundColor = 'white';
+      div.style.padding = '7px'
+      div.style.borderRadius = '3px'
+
+      this.markers.forEach(marker => {
+        labels.push('<img src="' + marker.icon + '" style="width: 20px; height: 20px;" alt="marker" />' + marker.label);
+      });
+
+      div.innerHTML = labels.join('<br>');
+      return div;
+    };
+
+    legend.addTo(this.map);
   }
 }

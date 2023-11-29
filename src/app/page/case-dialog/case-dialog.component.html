@@ -5,13 +5,13 @@
     <mat-form-field class="w-[49%]">
       <mat-label>Case Title</mat-label>
       <mat-select [(value)]="selectedFood">
-        <mat-option [value]="option.value" *ngFor="let option of foods">{{ option.viewValue }}</mat-option>
+        <mat-option [value]="option.value" *ngFor="let option of cases">{{ option.viewValue }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="w-[49%]">
       <mat-label>Type</mat-label>
       <mat-select [(value)]="selectedFood">
-        <mat-option [value]="option.value" *ngFor="let option of foods">{{ option.viewValue }}</mat-option>
+        <mat-option [value]="option.value" *ngFor="let option of cases">{{ option.viewValue }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -20,48 +20,48 @@
   <div class="grid grid-cols-3 gap-4">
     <mat-form-field>
       <mat-label>First name</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="caseData.complainantfName">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Middle name</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="caseData.complainantmName">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Last name</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="caseData.complainantlName">
     </mat-form-field>
   </div>
   <mat-form-field class="w-[100%]">
     <mat-label>Address</mat-label>
-    <input matInput [(ngModel)]="case.complainantAddress" (click)="openMap('complainant')">
+    <input matInput [(ngModel)]="caseData.complainantAddress" (click)="openMap('complainant')">
   </mat-form-field>
 
   <span class="text-[#333] dark:text-[#ccc]">Complaint Details</span>
   <div class="grid grid-cols-3 gap-4">
     <mat-form-field>
       <mat-label>First name</mat-label>
-      <input matInput #fname>
+      <input matInput #fname [(ngModel)]="caseData.complaintfName">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Middle name</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="caseData.complaintmName">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Last name</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="caseData.complaintlName">
     </mat-form-field>
   </div>
   <mat-form-field class="w-[100%]">
     <mat-label>Address</mat-label>
-    <input matInput [(ngModel)]="case.complaintAddress" (click)="openMap('complaint')">
+    <input matInput [(ngModel)]="caseData.complaintAddress" (click)="openMap('complaint')">
   </mat-form-field>
   <mat-form-field class="w-[100%]">
     <mat-label>Details of report</mat-label>
-    <textarea matInput #details rows="5" placeholder="Ex. He theft my bag..."></textarea>
+    <textarea matInput #details rows="5" [(ngModel)]="caseData.location" placeholder="Ex. He theft my bag..."></textarea>
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button class="submit" cdkFocusInitial>Submit</button>
+  <button mat-raised-button class="submit" (click)="submit()" cdkFocusInitial>Submit</button>
 </mat-dialog-actions>

@@ -33,3 +33,32 @@ export interface ApiResponse {
   title: string;
   message: string;
 }
+
+export interface GetLocation {
+  lat: number;
+  lng: number;
+  icon: string;
+  label: string;
+}
+
+
+export interface CaseData {
+  id: number;
+  title: string;
+  type: string;
+  complainantfName: string;
+  complainantmName: string;
+  complainantlName: string;
+  complainantAddress: string;
+  complainantLatLng: string;
+  complaintfName: string;
+  complaintmName: string;
+  complaintlName: string;
+  complaintAddress: string;
+  complaintLatLng: string;
+  schedule: string;
+  status: string;
+  remark: string;
+  location: string;
+  details: string;
+}

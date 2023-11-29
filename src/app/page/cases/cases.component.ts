@@ -5,6 +5,8 @@ import {MatDialog} from '@angular/material/dialog';
 import { CaseDialogComponent } from '../case-dialog/case-dialog.component';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { CaseData } from 'src/utils/data';
+import { ServiceData } from 'src/app/client/servicedata.client';
 
 export interface PeriodicElement {
   no: number;
@@ -16,28 +18,39 @@ export interface PeriodicElement {
   remarks: String
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {no: 10, title: "Threat", complainant: "Pisac, Salem", complaint: "", schedule: "2021-07-20", status: "Unsettled", remarks: "Pending"},
-  {no: 10, title: "Threat", complainant: "Pisac, Salem", complaint: "", schedule: "2021-07-20", status: "Unsettled", remarks: "Pending"},
-  {no: 10, title: "Threat", complainant: "Pisac, Salem", complaint: "", schedule: "2021-07-20", status: "Unsettled", remarks: "Pending"},
-  {no: 10, title: "Threat", complainant: "Pisac, Salem", complaint: "", schedule: "2021-07-20", status: "Unsettled", remarks: "Pending"},
-  {no: 10, title: "Threat", complainant: "Pisac, Salem", complaint: "", schedule: "2021-07-20", status: "Unsettled", remarks: "Pending"},
-  {no: 10, title: "Threat", complainant: "Pisac, Salem", complaint: "", schedule: "2021-07-20", status: "Unsettled", remarks: "Pending"},
-  {no: 10, title: "Threat", complainant: "Pisac, Salem", complaint: "", schedule: "2021-07-20", status: "Unsettled", remarks: "Pending"},
-  {no: 10, title: "Threat", complainant: "Pisac, Salem", complaint: "", schedule: "2021-07-20", status: "Unsettled", remarks: "Pending"}
-];
 @Component({
   selector: 'app-cases',
   templateUrl: './cases.component.html',
   styleUrls: ['./cases.component.scss']
 })
 export class CasesComponent {
+  caseData: CaseData[] = []
+  dataSource: any
+  ngOnInit(){
+    this.getCase()
+  }
+  @ViewChild(MatPaginator) paginator: any;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private serviceData: ServiceData) {
     (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
   }
 
-  generatePDF() {  
+  getCase(){
+    this.serviceData.getCase().subscribe(
+      (data)=>{
+        this.caseData = data
+        console.log(data)
+        this.dataSource = new MatTableDataSource<CaseData>(data)
+        this.dataSource.paginator = this.paginator;
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+  }
+
+
+  generatePDF() {
     let docDefinition: any = {
       content: [
         {
@@ -63,9 +76,9 @@ export class CasesComponent {
         },
       }
     }
-   
-    pdfMake.createPdf(docDefinition).download();  
-  }  
+
+    pdfMake.createPdf(docDefinition).download();
+  }
 
   table(){
     return {
@@ -76,22 +89,22 @@ export class CasesComponent {
         body: [
           [
             {
-              rowSpan: 2, 
+              rowSpan: 2,
               text: 'No.',
               style: 'tableHeader'
-            }, 
+            },
             {
-              rowSpan: 2, 
+              rowSpan: 2,
               text: 'Case Title.',
               style: 'tableHeader'
-            }, 
+            },
             {
-              text: 'Complainant', 
+              text: 'Complainant',
               colSpan: 2,
               style: 'tableHeader'
             }, {},
             {
-              text: 'Complainant', 
+              text: 'Complainant',
               colSpan: 3,
               style: 'tableHeader'
             }, {},{},
@@ -106,7 +119,7 @@ export class CasesComponent {
               style: 'tableHeader'
             }
           ],
-          ['', '', 
+          ['', '',
             {
               text: 'Name',
               style: 'tableHeader',
@@ -128,16 +141,15 @@ export class CasesComponent {
               style: 'tableHeader',
             },'',''
           ],
-          ...ELEMENT_DATA.map(ed => {
+          ...this.caseData.map(ed => {
             return [
-              ed.no, ed.title, 
-              ed.complainant, 
-              ed.schedule, 
-              ed.status, 
-              ed.remarks, 
-              ed.schedule, 
-              ed.status, ed.
-              remarks
+              ed.id, ed.title,
+              ed.complainantlName+' '+ed.complainantfName+' '+ed.complainantmName,
+              ed.schedule,
+              ed.status,
+              ed.remark,
+              ed.schedule,
+              ed.status
             ]
           })
         ]
@@ -154,13 +166,7 @@ export class CasesComponent {
   }
 
   displayedColumns: string[] = ['no', 'title', 'complainant', 'complaint', 'schedule', 'status', 'remarks', 'action'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
-  @ViewChild(MatPaginator) paginator: any;
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

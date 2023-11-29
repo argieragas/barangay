@@ -64,5 +64,5 @@ export class MapDialogComponent implements OnInit{
         throw error;
       });
   }
-  
+
 }

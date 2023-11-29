@@ -15,12 +15,11 @@ import { ReportData } from 'src/utils/data';
 })
 
 export class ReportComponent {
-  ELEMENT_DATA: ReportData[] = []
+  reportData: ReportData[] = []
   dataSource: any
   ngOnInit(){
     this.getReport()
   }
-
 
   delete(id){
     this.serviceData.deleteReport(id).subscribe(
@@ -36,7 +35,7 @@ export class ReportComponent {
   getReport(){
     this.serviceData.getReport().subscribe(
       (data)=>{
-        this.ELEMENT_DATA = data
+        this.reportData = data
         this.dataSource = new MatTableDataSource<ReportData>(data)
         this.dataSource.paginator = this.paginator
       },
@@ -119,7 +118,7 @@ export class ReportComponent {
               style: 'tableHeader'
             }
           ],
-          ...this.ELEMENT_DATA.map(ed => {
+          ...this.reportData.map(ed => {
             return [
               ed.involved,
               ed.incident,
