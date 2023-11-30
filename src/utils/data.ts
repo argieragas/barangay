@@ -39,6 +39,7 @@ export interface GetLocation {
   lng: number;
   icon: string;
   label: string;
+  content: string;
 }
 
 
@@ -60,5 +61,6 @@ export interface CaseData {
   status: string;
   remark: string;
   location: string;
+  locationLatLng: string;
   details: string;
 }

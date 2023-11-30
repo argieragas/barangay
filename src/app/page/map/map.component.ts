@@ -29,8 +29,9 @@ export class MapComponent implements OnInit{
 
   private addMarkers() {
     this.markers.forEach(marker => {
+      var popup = new L.Popup().setContent(marker.content)
       L.marker([marker.lat, marker.lng], { icon: L.icon({ iconUrl: marker.icon, iconSize: [30, 30] }) })
-        .bindPopup(marker.label)
+        .bindPopup(popup)
         .addTo(this.map);
     });
   }
@@ -47,6 +48,13 @@ export class MapComponent implements OnInit{
         this.markers = response
       }
     )
+    this.serviceData.getLocationCase().subscribe(
+      (response)=>{
+        response.forEach(data=>{
+          this.markers.push(data)
+        })
+      }
+    )
     setTimeout(() => {
       this.open = true
     }, 100);
@@ -58,23 +66,28 @@ export class MapComponent implements OnInit{
 
 
   private addLegend() {
-    const legend = (L as any).control({ position: 'bottomright' });
-
+    const legend = (L as any).control({ position: 'bottomright' })
+    const arrayMarker = new Set<string>()
     legend.onAdd = () => {
-      const div = L.DomUtil.create('div', 'legend');
-      const labels = [];
-      div.style.backgroundColor = 'white';
+      const div = L.DomUtil.create('div', 'legend')
+      const labels = []
+      div.style.backgroundColor = 'white'
       div.style.padding = '7px'
       div.style.borderRadius = '3px'
-
       this.markers.forEach(marker => {
-        labels.push('<img src="' + marker.icon + '" style="width: 20px; height: 20px;" alt="marker" />' + marker.label);
+        arrayMarker.add(JSON.stringify({icon: marker.icon, label: marker.label}))
       });
+      const array = Array.from(arrayMarker).map(el => JSON.parse(el))
 
-      div.innerHTML = labels.join('<br>');
-      return div;
-    };
+      array.forEach(el => {
+        console.log(el)
+        labels.push('<div style="text-align: center"><img src="' + el.icon + '" style="width: 23px; height: 23px; margin: auto" alt="marker" /> '+el.label+'</div')
+      })
 
-    legend.addTo(this.map);
+      div.innerHTML = labels.join('<br>')
+      return div
+    }
+
+    legend.addTo(this.map)
   }
 }

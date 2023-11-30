@@ -1,4 +1,4 @@
-import { LocationData } from './../../../utils/data';
+
 import { Component, ViewChild, ElementRef, Inject } from '@angular/core';
 import { MapDialogComponent } from '../map-dialog/map-dialog.component';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';

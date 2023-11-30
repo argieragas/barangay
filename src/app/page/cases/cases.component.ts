@@ -157,11 +157,13 @@ export class CasesComponent {
     }
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(CaseDialogComponent);
+  openDialog(type, id) {
+    const dialogRef = this.dialog.open(CaseDialogComponent,{
+      data: {dataType: type, id: id}
+    });
     console.log(`Dialog result: `);
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      this.getCase()
     });
   }
 

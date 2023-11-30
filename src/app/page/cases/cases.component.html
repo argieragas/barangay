@@ -4,7 +4,7 @@
     <mat-icon class="mr-1">launch</mat-icon>
     Export
   </button>
-  <button type="button" mat-button (click)="openDialog()" class="custom-btn">
+  <button type="button" mat-button (click)="openDialog('Add Case', 0)" class="custom-btn">
     <mat-icon class="mr-1">add</mat-icon>
     Add Case
   </button>
@@ -57,10 +57,10 @@
     <ng-container matColumnDef="action">
       <th class="w-[200px]" mat-header-cell *matHeaderCellDef> Action </th>
       <td class="w-[200px]" mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="openDialog()">
+        <button mat-icon-button (click)="openDialog('View Case', element)">
           <mat-icon>remove_red_eye</mat-icon>
         </button>
-        <button mat-icon-button color="accent">
+        <button mat-icon-button (click)="openDialog('Update Case', element)" color="accent">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button color="primary">

@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environment/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { GetLocation, ReportData } from 'src/utils/data';
 import { ApiResponse } from 'src/utils/data';
 import { CaseData } from 'src/utils/data';
@@ -35,7 +35,19 @@ export class ServiceData {
     return this.http.get<GetLocation[]>(environment.apiUrl + '/getLocationReport')
   }
 
-  public getCase(): Observable<CaseData[]>{
+  public getCase(): Observable<CaseData[]> {
     return this.http.get<CaseData[]>(environment.apiUrl + '/getCase')
+  }
+
+  public addCase(data: CaseData): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(environment.apiUrl + '/newCase', data)
+  }
+
+  public updateCase(data: CaseData): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(environment.apiUrl + '/updateCase', data)
+  }
+
+  public getLocationCase(): Observable<GetLocation[]> {
+    return this.http.get<GetLocation[]>(environment.apiUrl + '/getLocationCase')
   }
 }
