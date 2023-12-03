@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
+import { ServiceData } from 'src/app/client/servicedata.client';
 
 export interface PeriodicElement{
   year: number;
@@ -32,7 +33,20 @@ export class DashboardComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  constructor(private serviceData: ServiceData){
+
+  }
+
   ngOnInit(){
-    
+    this.serviceData.getCountReport().subscribe(
+      (response)=>{
+        console.log('ng on init', response)
+      }
+    )
+    this.serviceData.getCountCase().subscribe(
+      (response)=>{
+        console.log('asd', response)
+      }
+    )
   }
 }

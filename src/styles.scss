@@ -37,6 +37,11 @@ $light-theme: mat.define-light-theme((
 @tailwind components;
 @tailwind utilities;
 
+.leaflet-control-geocoder>button {
+  -webkit-appearance: button!important;
+  background-color: transparent;
+  background-image: url('assets/img/geocoder.png')!important;
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

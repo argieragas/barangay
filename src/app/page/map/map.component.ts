@@ -36,13 +36,7 @@ export class MapComponent implements OnInit{
     });
   }
 
-  onMapReady(map: L.Map) {
-    this.map = map;
-    (L.Control as any).geocoder().addTo(map)
-  }
-  open = false
-
-  ngOnInit(): void {
+  private fetchData(){
     this.serviceData.getLocationReport().subscribe(
       (response)=>{
         this.markers = response
@@ -55,6 +49,16 @@ export class MapComponent implements OnInit{
         })
       }
     )
+  }
+
+  onMapReady(map: L.Map) {
+    this.map = map;
+    (L.Control as any).geocoder().addTo(map)
+  }
+  open = false
+
+  ngOnInit(): void {
+    this.fetchData()
     setTimeout(() => {
       this.open = true
     }, 100);
@@ -63,7 +67,6 @@ export class MapComponent implements OnInit{
       this.addLegend()
     }, 500)
   }
-
 
   private addLegend() {
     const legend = (L as any).control({ position: 'bottomright' })

@@ -1,17 +1,16 @@
-
 <h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content class="mat-typography">
   <div class="flex justify-between">
     <mat-form-field class="w-[49%]">
-      <mat-label>Case Title</mat-label>
-      <mat-select [(ngModel)]="caseData.title" [(value)]="selectedFood">
-        <mat-option [value]="option.value" *ngFor="let option of cases">{{ option.viewValue }}</mat-option>
+      <mat-label>Type</mat-label>
+      <mat-select [(ngModel)]="caseData.type" (selectionChange)="changeType()" [(value)]="selectedType">
+        <mat-option [value]="option" *ngFor="let option of caseType">{{ option }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="w-[49%]">
-      <mat-label>Type</mat-label>
-      <mat-select [(ngModel)]="caseData.type" [(value)]="selectedFood">
-        <mat-option [value]="option.value" *ngFor="let option of cases">{{ option.viewValue }}</mat-option>
+      <mat-label>Case Title</mat-label>
+      <mat-select [(ngModel)]="caseData.title" [(value)]="selectedTitle">
+        <mat-option [value]="option" *ngFor="let option of selectedTypeValue">{{ option }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>

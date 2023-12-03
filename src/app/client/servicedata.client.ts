@@ -50,4 +50,12 @@ export class ServiceData {
   public getLocationCase(): Observable<GetLocation[]> {
     return this.http.get<GetLocation[]>(environment.apiUrl + '/getLocationCase')
   }
+
+  public getCountReport(): Observable<number> {
+    return this.http.get<number>(environment.apiUrl + '/getCountReport');
+  }
+
+  public getCountCase(): Observable<number> {
+    return this.http.get<number>(environment.apiUrl + '/getCountCase')
+  }
 }

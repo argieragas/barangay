@@ -1,16 +1,17 @@
 
-import { Component, ViewChild, ElementRef, Inject } from '@angular/core';
-import { MapDialogComponent } from '../map-dialog/map-dialog.component';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { CaseData, LocationData } from 'src/utils/data';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ServiceData } from 'src/app/client/servicedata.client';
+import { CaseData } from 'src/utils/data';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MapDialogComponent } from '../map-dialog/map-dialog.component';
 
-interface Case {
-  value: string;
-  viewValue: string;
+export interface CaseTitle {
+  title: string;
+  value: string[];
 }
+
 @Component({
   selector: 'app-case-dialog',
   templateUrl: './case-dialog.component.html',
@@ -20,61 +21,96 @@ export class CaseDialogComponent {
   title = ''
   @ViewChild('fname') _fname: ElementRef
   @ViewChild('details') _details: ElementRef
-  cases: Case[] = [
-    {value: '', viewValue: '--'},
-    {value: 'ABANDONING A MINOR (CHILD UNDER 7 YEARS OLD)', viewValue: 'ABANDONING A MINOR (CHILD UNDER 7 YEARS OLD)'},
-    {value: 'ABANDONMENT OF A MINOR BY PERONS ENTRUSTED WITH HIS/HER CUSTODY', viewValue: 'ABANDONMENT OF A MINOR BY PERONS ENTRUSTED WITH HIS/HER CUSTODY'},
-    {value: `ABANDONMENT OF A PERSON IN DANGER AND ABANDONMENT OF ONE’S VICTIM `, viewValue: `ABANDONMENT OF A PERSON IN DANGER AND ABANDONMENT OF ONE’S VICTIM `},
-    {value: `ACTS OF LASCIVIOUSNESS WITH THE CONSENT OF THE OFFENDED PARTY `, viewValue: 'ACTS OF LASCIVIOUSNESS WITH THE CONSENT OF THE OFFENDED PARTY '},
-    {value: 'ALARMS AND SCANDALS', viewValue: 'ALARMS AND SCANDALS '},
-    {value: 'ALTERING BOUNDARIES OR LANDMARKS', viewValue: 'ALTERING BOUNDARIES OR LANDMARKS'},
-    {value: 'DISCOVERING SECRETS THROUGH SEIZURE AND CORRESPONDENCE', viewValue: 'DISCOVERING SECRETS THROUGH SEIZURE AND CORRESPONDENCE'},
-    {value: 'FENCING OF STOLEN PROPERTIES IF THE PROPERTY INVOLVED IS NOT MORE THAN P50.00 ', viewValue: 'FENCING OF STOLEN PROPERTIES IF THE PROPERTY INVOLVED IS NOT MORE THAN P50.00 '},
-    {value: 'FORMATION, MAINTENANCE AND PROHIBITION OF COMBINATION OF CAPITAL OR LABOR THROUGH VIOLENCE OR THREATS ', viewValue: 'FORMATION, MAINTENANCE AND PROHIBITION OF COMBINATION OF CAPITAL OR LABOR THROUGH VIOLENCE OR THREATS '},
-    {value: 'GIVING ASSISTANCE TO CONSUMMATED SUICIDE', viewValue: 'GIVING ASSISTANCE TO CONSUMMATED SUICIDE'},
-    {value: 'GRAVE COERCION', viewValue: 'GRAVE COERCION'},
-    {value: 'ILLEGAL USE OF UNIFORMS AND INSIGNIAS', viewValue: 'ILLEGAL USE OF UNIFORMS AND INSIGNIAS'},
-    {value: 'INCRIMINATING INNOCENT PERSONS', viewValue: 'INCRIMINATING INNOCENT PERSONS'},
-    {value: 'INDUCING A MINOR TO ABANDON HIS/HER HOME', viewValue: 'INDUCING A MINOR TO ABANDON HIS/HER HOME'},
-    {value: 'INTRIGUING AGAINST HONOR', viewValue: 'INTRIGUING AGAINST HONOR'},
-    {value: 'ISSUING CHECKS WITHOUT SUFFICIENT FUNDS', viewValue: 'ISSUING CHECKS WITHOUT SUFFICIENT FUNDS'},
-    {value: 'LESS SERIOUS PHYSICAL INJURIES', viewValue: 'LESS SERIOUS PHYSICAL INJURIES'},
-    {value: 'LIGHT COERCION', viewValue: 'LIGHT COERCION'},
-    {value: 'LIGHT THREATS', viewValue: 'LIGHT THREATS'},
-    {value: 'OCCUPATION OF REAL PROPERTY OR USURPATION OF REAL', viewValue: 'OCCUPATION OF REAL PROPERTY OR USURPATION OF REAL'},
-    {value: 'OTHER DECEITS', viewValue: 'OTHER DECEITS'},
-    {value: 'OTHER FORMS OF SWINDLING', viewValue: 'OTHER FORMS OF SWINDLING'},
-    {value: 'OTHER FORMS OF TRESPASS', viewValue: 'OTHER FORMS OF TRESPASS'},
-    {value: 'OTHER LIGHT THREATS', viewValue: 'OTHER LIGHT THREATS'},
-    {value: 'OTHER MISCHIEFS (DAMAGED PROPERTY DOES NOT EXCEED P1,000.00)', viewValue: 'OTHER MISCHIEFS (DAMAGED PROPERTY DOES NOT EXCEED P1,000.00)'},
-    {value: 'OTHER SIMILAR COERCIONS (COMPULSORY PURCHASE OF MERCHANDISE AND PAYMENT OF WAGES USING TOKENS)', viewValue: 'OTHER SIMILAR COERCIONS (COMPULSORY PURCHASE OF MERCHANDISE AND PAYMENT OF WAGES USING TOKENS)'},
-    {value: 'PHYSICAL INJURIES INFLICTED IN A TUMULTUOUS AFFRAY', viewValue: 'PHYSICAL INJURIES INFLICTED IN A TUMULTUOUS AFFRAY'},
-    {value: 'PROHIBITING PUBLICATION OF ACTS REFERRED TO IN THE COURSE OF OFFICIAL PROCEEDINGS', viewValue: 'PROHIBITING PUBLICATION OF ACTS REFERRED TO IN THE COURSE OF OFFICIAL PROCEEDINGS'},
-    {value: 'QUALIFIED THEFT (IF THE AMOUNT DOES NOT EXCEED P500)', viewValue: 'QUALIFIED THEFT (IF THE AMOUNT DOES NOT EXCEED P500)'},
-    {value: 'QUALIFIED TRESPASS TO DWELLING (WITHOUT USE OF VIOLENCE)', viewValue: 'QUALIFIED TRESPASS TO DWELLING (WITHOUT USE OF VIOLENCE)'},
-    {value: 'REMOVAL, SALE OR PLEDGE OF MORTGAGED PROPERTY', viewValue: 'REMOVAL, SALE OR PLEDGE OF MORTGAGED PROPERTY'},
-    {value: 'RESPONSIBILITY OF PARTICIPANTS IN A DUEL IF ONLY PHYSICAL INJURIES ARE INFLICTED OR NO PHYSICAL INJURIES HAVE BEEN INFLICTED', viewValue: 'RESPONSIBILITY OF PARTICIPANTS IN A DUEL IF ONLY PHYSICAL INJURIES ARE INFLICTED OR NO PHYSICAL INJURIES HAVE BEEN INFLICTED'},
-    {value: 'REVEALING SECRETS WITH ABUSE OF AUTHORITY', viewValue: 'REVEALING SECRETS WITH ABUSE OF AUTHORITY'},
-    {value: 'RIGHTS IN PROPERTY', viewValue: 'RIGHTS IN PROPERTY'},
-    {value: 'SIMPLE SEDUCTION', viewValue: 'SIMPLE SEDUCTION'},
-    {value: 'SLIGHT PHYSICAL INJURIES AND MALTREATMENT', viewValue: 'SLIGHT PHYSICAL INJURIES AND MALTREATMENT'},
-    {value: 'SPECIAL CASES OF MALICIOUS MISCHIEF (DAMAGED PROPERTY DOES NOT EXCEED P1,000.00)', viewValue: 'SPECIAL CASES OF MALICIOUS MISCHIEF (DAMAGED PROPERTY DOES NOT EXCEED P1,000.00)'},
-    {value: 'SWINDLING A MINOR', viewValue: 'SWINDLING A MINOR'},
-    {value: 'SWINDLING OR ESTAFA (AMOUNT DOES NOT EXCEED P200.00)', viewValue: 'SWINDLING OR ESTAFA (AMOUNT DOES NOT EXCEED P200.00)'},
-    {value: 'THEFT (PROPERTY STOLEN DOES NOT EXCEED P50.00).', viewValue: 'THEFT (PROPERTY STOLEN DOES NOT EXCEED P50.00).'},
-    {value: 'THREATENING TO PUBLISH AND OFFER TO PREVENT SUCH PUBLICATION FOR COMPENSATION', viewValue: 'THREATENING TO PUBLISH AND OFFER TO PREVENT SUCH PUBLICATION FOR COMPENSATION'},
-    {value: 'UNLAWFUL ARREST', viewValue: 'UNLAWFUL ARREST'},
-    {value: 'UNLAWFUL USE OF MEANS OF PUBLICATION AND UNLAWFUL', viewValue: 'UNLAWFUL USE OF MEANS OF PUBLICATION AND UNLAWFUL'},
-    {value: 'USING FALSE CERTIFICATES ', viewValue: 'USING FALSE CERTIFICATES '},
-    {value: 'USING FICTITIOUS NAMES AND CONCEALING TRUE NAMES', viewValue: 'USING FICTITIOUS NAMES AND CONCEALING TRUE NAMES'},
-    {value: 'UTTERANCES', viewValue: 'UTTERANCES'}
-  ];
+  form: FormGroup;
+  cities: string[] = [];
+  barangays: string[] = [];
 
+
+  caseType = [
+    'Economic Offence',
+    'Offence against a person',
+    'Offence against chastity',
+    'Offence against honor',
+    'Offence against property',
+    'Offence against public order',
+    'Offence against the family and children'
+  ]
+
+  caseTitle: CaseTitle[] = [{
+      title: 'Economic Offence',
+      value: ['Issuing checks without sufficient funds']
+    },{
+      title: 'Offence against a person',
+      value: [
+        'Physical Injuries inflicted in a Tumultuous affray',
+        'Giving assistance to consummated suicide',
+        'Responsibility of paticipants in a duel if only physical injuries are inflicted or no phycial injuries have been inflicted',
+        'Less serious physical injuries'
+      ]
+    },{
+      title: 'Offence against chastity',
+      value: [
+        'Simple seduction',
+        'Acts of lasciviousness with the consent of the offended party'
+      ]
+    },{
+      title: 'Offence against honor',
+      value: [
+        'Threatening to publish and offer to prevent such publication for compensation',
+        'Prohibiting publication of acts referred to in the course of official proceedings',
+        'Incriminating innocent persons',
+        'intriguing against honor'
+      ]
+    },{
+      title: 'Offence against property',
+      value: [
+        'Qualified trespass to dwelling (without the use of violence and intimidation)',
+        'Other forms of trespass',
+        'Theft (if the value of the property stolen does not exceed ₱50.00)',
+        'Qualified theft (if the amount does not exceed ₱50.00)',
+        'Occupation of real property or usurpation of real rights in property',
+        'Altering Boundaries or landmakrs',
+        'Swindling or estafa (if the amount does not exceed ₱200.00)',
+        'Other forms of swindling',
+        'Swindling in a minor',
+        'Other deceits',
+        'Removal, Sale, or Pledge of mortgaged property',
+        'Special cases of malicious mischief (if the value of the damaged property does not exceed ₱1,000.00)',
+        'Other mischiefs (if the value of the damaged property does not exceed ₱1,000.00)',
+        'Fencing of stolen properties if the property involved is not more than ₱50.00'
+      ]
+    },{
+      title: 'Offence against public order',
+      value: [
+        'Unlawful use of means of publication and unlawful utterances',
+        'Alarms and scandals',
+        'Using false certificates',
+        'Using fictitious names and concealing true names',
+        'Illegal use of uniforms and insignias'
+      ]
+    },{
+      title: 'Offence against the family and children',
+      value: [
+        'Inducing a minor to abandon his/her home',
+        `Abandonment of a person in danger and abandonment of One's Own victim`,
+        'Abandoning a minor (a child under seven[7] years old)',
+        'Abandonment of a minor by persons entrusted with his/her custody; indifference of parents.'
+      ]
+    }
+  ]
+
+
+  selectedType = this.caseType[0]
+  selectedTypeValue: string[]
+  selectedTitle = ''
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<CaseDialogComponent>,
-    private serviceData: ServiceData) {}
+    private serviceData: ServiceData,
+    private fb: FormBuilder
+  ) {}
+
   caseData: CaseData = {
     id: 0,
     title: '',
@@ -96,7 +132,17 @@ export class CaseDialogComponent {
     locationLatLng: '',
     details: ''
   }
-  selectedFood = this.cases[0].value
+
+
+  changeType() {
+    this.caseTitle.forEach(type=>{
+      if(type.title == this.caseData.type){
+        console.log(type.title, type.value)
+        this.selectedTypeValue = type.value
+        this.caseData.title = type.value[0]
+      }
+    })
+  }
 
   ngOnInit() {
     this.title = this.data.dataType
