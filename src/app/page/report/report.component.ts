@@ -7,6 +7,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { ServiceData } from 'src/app/client/servicedata.client';
 import { ReportData } from 'src/utils/data';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
   selector: 'app-report',
@@ -22,14 +23,25 @@ export class ReportComponent {
   }
 
   delete(id){
-    this.serviceData.deleteReport(id).subscribe(
-      ()=>{
-        this.getReport()
-      },
-      (error)=>{
-        console.log(error)
+    Swal.fire({
+      title: 'Are you sure want to remove?',
+      text: 'You will not be able to recover this data!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.serviceData.deleteReport(id).subscribe(
+          ()=>{
+            this.getReport()
+          },
+          (error)=>{
+            console.log(error)
+          }
+        )
       }
-    )
+    })
   }
 
   getReport(){

@@ -6,6 +6,7 @@ import { CaseDialogComponent } from '../case-dialog/case-dialog.component';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { CaseData } from 'src/utils/data';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { ServiceData } from 'src/app/client/servicedata.client';
 
 export interface PeriodicElement {
@@ -39,9 +40,8 @@ export class CasesComponent {
     this.serviceData.getCase().subscribe(
       (data)=>{
         this.caseData = data
-        console.log(data)
         this.dataSource = new MatTableDataSource<CaseData>(data)
-        this.dataSource.paginator = this.paginator;
+        this.dataSource.paginator = this.paginator
       },
       (error)=>{
         console.log(error)
@@ -49,6 +49,27 @@ export class CasesComponent {
     )
   }
 
+  delete(id){
+    Swal.fire({
+      title: 'Are you sure want to remove?',
+      text: 'You will not be able to recover this data!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.serviceData.deleteCase(id).subscribe(
+          ()=>{
+            this.getCase()
+          },
+          (error)=>{
+            console.log(error)
+          }
+        )
+      }
+    })
+  }
 
   generatePDF() {
     let docDefinition: any = {
@@ -76,7 +97,6 @@ export class CasesComponent {
         },
       }
     }
-
     pdfMake.createPdf(docDefinition).download();
   }
 

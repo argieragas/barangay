@@ -63,7 +63,7 @@
         <button mat-icon-button (click)="openDialog('Update Case', element)" color="accent">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="primary">
+        <button mat-icon-button color="primary" (click)="delete(element.id)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

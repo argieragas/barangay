@@ -1,51 +1,48 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
-
-export interface PeriodicElement {
-  id: number;
-  name: String;
-  address: String;
-  position: String;
-  committee: String;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1, name: "Prodenciano", address: "Purok Kimbal, Dahican Mati City", position: "Security", committee: "Women, Family sealer"},
-  {id: 1, name: "Prodenciano", address: "Purok Kimbal, Dahican Mati City", position: "Security", committee: "Women, Family sealer"},
-  {id: 1, name: "Prodenciano", address: "Purok Kimbal, Dahican Mati City", position: "Security", committee: "Women, Family sealer"},
-  {id: 1, name: "Prodenciano", address: "Purok Kimbal, Dahican Mati City", position: "Security", committee: "Women, Family sealer"},
-  {id: 1, name: "Prodenciano", address: "Purok Kimbal, Dahican Mati City", position: "Security", committee: "Women, Family sealer"},
-  {id: 1, name: "Prodenciano", address: "Purok Kimbal, Dahican Mati City", position: "Security", committee: "Women, Family sealer"},
-  {id: 1, name: "Prodenciano", address: "Purok Kimbal, Dahican Mati City", position: "Security", committee: "Women, Family sealer"}
-];
+import { UserData } from 'src/utils/data';
+import { ServiceData } from 'src/app/client/servicedata.client';
 
 @Component({
   selector: 'app-officer',
   templateUrl: './officer.component.html',
   styleUrls: ['./officer.component.scss']
 })
-export class OfficerComponent implements AfterViewInit {
-  displayedColumns: string[] = ['name', 'address', 'position', 'committee', 'action'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+export class OfficerComponent {
+  userData: UserData[] = []
 
-  @ViewChild(MatPaginator) paginator: any;
+  displayedColumns: string[] = ['name', 'address', 'position', 'committee'];
+  dataSource: any
 
-  constructor(public dialog: MatDialog) {
-    (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+  ngOnInit(){
+    this.getUser()
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  getUser(){
+    this.serviceData.getUser().subscribe(
+      (data)=>{
+        this.userData = data
+        this.dataSource = new MatTableDataSource<UserData>(data)
+        this.dataSource.paginator = this.paginator
+      }
+    )
+
+  }
+  @ViewChild(MatPaginator) paginator: any;
+
+  constructor(public dialog: MatDialog, private serviceData: ServiceData) {
+    (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
 
   generatePDF(){
     let docDefinition: any = {
@@ -98,7 +95,7 @@ export class OfficerComponent implements AfterViewInit {
               style: 'tableHeader'
             }
           ],
-          ...ELEMENT_DATA.map(ed => {
+          ...this.userData.map(ed => {
             return [
               ed.name,
               ed.address,

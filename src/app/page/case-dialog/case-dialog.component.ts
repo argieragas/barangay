@@ -177,7 +177,6 @@ export class CaseDialogComponent {
     }
   }
 
-
   private showAlert(icon: SweetAlertOptions['icon'], title?: string, text?: string): void {
     Swal.fire({
       icon,

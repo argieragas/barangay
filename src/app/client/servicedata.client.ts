@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environment/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GetLocation, ReportData } from 'src/utils/data';
-import { ApiResponse } from 'src/utils/data';
-import { CaseData } from 'src/utils/data';
+import { GetLocation, ReportData, UserData, ApiResponse, CaseData } from 'src/utils/data';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,6 +19,10 @@ export class ServiceData {
 
   public deleteReport(id): Observable<string> {
     return this.http.delete<string>(environment.apiUrl + '/deleteReport/'+id)
+  }
+
+  public deleteCase(id): Observable<string> {
+    return this.http.delete<string>(environment.apiUrl + '/deleteCase/'+id)
   }
 
   public addReport(data: ReportData): Observable<ApiResponse> {
@@ -57,5 +59,9 @@ export class ServiceData {
 
   public getCountCase(): Observable<number> {
     return this.http.get<number>(environment.apiUrl + '/getCountCase')
+  }
+
+  public getUser(): Observable<UserData[]> {
+    return this.http.get<UserData[]>(environment.apiUrl + '/getUser')
   }
 }

@@ -36,6 +36,7 @@
               "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
+              "node_modules/leaflet.heat/dist/leaflet.heat.js",
               "node_modules/chart.js/dist/chart.js"
             ]
           },

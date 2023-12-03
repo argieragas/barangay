@@ -22,6 +22,10 @@ export class MapDialogComponent implements OnInit{
   }
   constructor(private dialogRef: MatDialogRef<MapDialogComponent>){ }
 
+  close(){
+    this.dialogRef.close(this.locationData)
+  }
+
   options = {
     layers: [
       L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {

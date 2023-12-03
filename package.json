@@ -32,6 +32,7 @@
     "global": "^4.4.0",
     "leaflet": "^1.9.4",
     "leaflet-control-geocoder": "^1.13.0",
+    "leaflet.heat": "^0.2.0",
     "mdbootstrap": "^4.20.0",
     "mysql": "2.18.1",
     "ng": "^0.0.0",

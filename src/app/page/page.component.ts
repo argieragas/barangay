@@ -30,6 +30,10 @@ export class PageComponent {
     )
   }
 
+  changeInfo() {
+    
+  }
+
   logout(){
     this.authenticationService.logout()
   }
