@@ -1,7 +1,7 @@
 import { environment } from 'src/environment/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Login, Register } from 'src/utils/data';
 
 @Injectable({

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { ServiceData } from 'src/app/client/servicedata.client';
+import { DashboardCount, DashboardTable } from 'src/utils/data';
 
 export interface PeriodicElement{
   year: number;
@@ -9,15 +10,6 @@ export interface PeriodicElement{
   injured: number;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {year: 2018, cases: 100, killed: 410, injured: 41},
-  {year: 2019, cases: 10, killed: 3, injured: 1},
-  {year: 2020, cases: 300, killed: 41, injured: 11},
-  {year: 2021, cases: 510, killed: 44, injured: 34},
-  {year: 2022, cases: 105, killed: 17, injured: 4},
-  {year: 2023, cases: 154, killed: 71, injured: 81}
-];
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -25,12 +17,19 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class DashboardComponent {
-  displayedColumns: string[] = ['year', 'cases', 'killed', 'injured'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: string[] = ['year', 'cases', 'report'];
+
+  tableData: DashboardTable[] = []
+  dc: DashboardCount = {
+    user: 0,
+    case: 0,
+    report: 0
+  }
+  dataSource: any
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value
+    this.dataSource.filter = filterValue.trim().toLowerCase()
   }
 
   constructor(private serviceData: ServiceData){
@@ -38,14 +37,16 @@ export class DashboardComponent {
   }
 
   ngOnInit(){
-    this.serviceData.getCountReport().subscribe(
+    this.serviceData.getCount().subscribe(
       (response)=>{
-        console.log('ng on init', response)
+        this.dc = response
       }
     )
-    this.serviceData.getCountCase().subscribe(
+
+    this.serviceData.getDashboard().subscribe(
       (response)=>{
-        console.log('asd', response)
+        this.tableData = response
+        this.dataSource = new MatTableDataSource<DashboardTable>(this.tableData)
       }
     )
   }

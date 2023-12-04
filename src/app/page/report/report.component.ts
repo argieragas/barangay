@@ -7,7 +7,8 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { ServiceData } from 'src/app/client/servicedata.client';
 import { ReportData } from 'src/utils/data';
-import Swal, { SweetAlertOptions } from 'sweetalert2';
+import Swal from 'sweetalert2';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-report',
@@ -18,7 +19,15 @@ import Swal, { SweetAlertOptions } from 'sweetalert2';
 export class ReportComponent {
   reportData: ReportData[] = []
   dataSource: any
+  data = JSON.parse(localStorage.getItem('token'))
+  displayedColumns: String[] = []
+
   ngOnInit(){
+    if(this.data.user.position == 'Admin'){
+      this.displayedColumns = ['no', 'involved', 'incident', 'location', 'date', 'action']
+    }else{
+      this.displayedColumns = ['no', 'involved', 'incident', 'location', 'date']
+    }
     this.getReport()
   }
 
@@ -56,8 +65,6 @@ export class ReportComponent {
       }
     )
   }
-
-  displayedColumns: String[] = ['no', 'involved', 'incident', 'location', 'date', 'action']
 
   @ViewChild(MatPaginator) paginator: any;
 
@@ -105,7 +112,7 @@ export class ReportComponent {
         },
       }
     }
-    pdfMake.createPdf(docDefinition).download();
+    pdfMake.createPdf(docDefinition).download(`Report file ${formatDate(new Date(), 'yyyy/MM/dd', 'en')}`)
   }
 
   table(){

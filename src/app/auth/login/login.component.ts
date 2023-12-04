@@ -16,7 +16,7 @@ export class LoginComponent {
 
   regist: Register = {
     name: '',
-    address: '',
+  address: '',
     position: 'unknown',
     committee: 'unknown',
     email: '',

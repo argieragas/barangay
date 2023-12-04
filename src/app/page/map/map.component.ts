@@ -33,7 +33,7 @@ export class MapComponent implements OnInit{
     zoom: 10,
     center: L.latLng(6.930830, 126.280320)
   }
-  
+
   customControl = L.Control.extend({
     options: {
       position: 'bottomright'

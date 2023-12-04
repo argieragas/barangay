@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environment/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GetLocation, ReportData, UserData, ApiResponse, CaseData } from 'src/utils/data';
+import { GetLocation, ReportData, UserData, ApiResponse, CaseData, DashboardCount, DashboardTable } from 'src/utils/data';
 @Injectable({
   providedIn: 'root',
 })
@@ -53,15 +53,15 @@ export class ServiceData {
     return this.http.get<GetLocation[]>(environment.apiUrl + '/getLocationCase')
   }
 
-  public getCountReport(): Observable<number> {
-    return this.http.get<number>(environment.apiUrl + '/getCountReport');
-  }
-
-  public getCountCase(): Observable<number> {
-    return this.http.get<number>(environment.apiUrl + '/getCountCase')
+  public getCount(): Observable<DashboardCount> {
+    return this.http.get<DashboardCount>(environment.apiUrl + '/getCount')
   }
 
   public getUser(): Observable<UserData[]> {
     return this.http.get<UserData[]>(environment.apiUrl + '/getUser')
+  }
+
+  public getDashboard(): Observable<DashboardTable[]> {
+    return this.http.get<DashboardTable[]>(environment.apiUrl + '/getDashboard')
   }
 }
