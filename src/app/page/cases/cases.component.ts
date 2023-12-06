@@ -32,7 +32,7 @@ export class CasesComponent {
   displayedColumns: string[] = []
 
   ngOnInit(){
-    if(this.data.user.position == 'Admin'){
+    if(this.data.user.position == 'unknown'){
       this.displayedColumns = ['no', 'title', 'complainant', 'complaint', 'schedule', 'status', 'remarks', 'action']
     }else{
       this.displayedColumns = ['no', 'title', 'complainant', 'complaint', 'schedule', 'status', 'remarks']
@@ -175,12 +175,12 @@ export class CasesComponent {
               ed.id,
               ed.title,
               ed.complainantlName+' '+ed.complainantfName+' '+ed.complainantmName,
+              ed.complainantAddress,
+              ed.complaintlName+' '+ed.complaintfName+' '+ed.complaintmName,
+              ed.complaintAddress,
+              ed.details,
               ed.schedule,
-              ed.status,
-              ed.remark,
-              ed.schedule,
-              ed.status,
-              ed.details
+              ed.status
             ]
           })
         ]

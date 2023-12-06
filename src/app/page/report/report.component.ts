@@ -23,7 +23,7 @@ export class ReportComponent {
   displayedColumns: String[] = []
 
   ngOnInit(){
-    if(this.data.user.position == 'Admin'){
+    if(this.data.user.position == 'unknown'){
       this.displayedColumns = ['no', 'involved', 'incident', 'location', 'date', 'action']
     }else{
       this.displayedColumns = ['no', 'involved', 'incident', 'location', 'date']
