@@ -34,6 +34,8 @@ export class MapComponent implements OnInit{
     center: L.latLng(6.930830, 126.280320)
   }
 
+
+
   customControl = L.Control.extend({
     options: {
       position: 'bottomright'
@@ -127,7 +129,6 @@ export class MapComponent implements OnInit{
       this.heatEvent = false
     }
   }
-
 
   addLegend() {
     this.legend = (L as any).control({ position: 'bottomright' })

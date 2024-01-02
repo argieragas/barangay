@@ -20,7 +20,7 @@ import {FormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import { OfficerDialogComponent } from './officer-dialog/officer-dialog.component';
 import { MapComponent } from './map/map.component';
-import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 import { MapDialogComponent } from '../page/map-dialog/map-dialog.component';
 import { UpdateComponent } from './update/update.component';

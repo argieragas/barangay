@@ -9,6 +9,9 @@ import { OfficerComponent } from './page/officer/officer.component';
 import { ReportComponent } from './page/report/report.component';
 import { MapComponent } from './page/map/map.component';
 import { AuthGuard } from './helpers/auth.guard';
+import { HomeComponent } from './home/home.component';
+import { HomedashboardComponent } from './home/homedashboard/homedashboard.component';
+import { HomemapComponent } from './home/homemap/homemap.component';
 
 const routes: Routes = [
   {
@@ -17,9 +20,16 @@ const routes: Routes = [
     children: [
       {path:'',component: LoginComponent}
     ]
+  },{
+    path: '',
+    component: HomeComponent,
+    children: [
+      {path: '', component: HomedashboardComponent},
+      {path: 'map', component: HomemapComponent}
+    ]
   },
   {
-    path: '',
+    path: 'user',
     component: PageComponent,
     children: [
       {
