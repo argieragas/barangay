@@ -78,15 +78,3 @@ export interface UserData {
   created_at: string;
   updated_at: string;
 }
-
-export interface DashboardCount {
-  user: number;
-  case: number;
-  report: number;
-}
-
-export interface DashboardTable {
-  year: number;
-  case: number;
-  report: number;
-}

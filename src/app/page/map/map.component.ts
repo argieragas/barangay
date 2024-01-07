@@ -33,9 +33,11 @@ export class MapComponent implements OnInit{
     zoom: 10,
     center: L.latLng(6.930830, 126.280320)
   }
+<<<<<<< HEAD
+  
+=======
 
-
-
+>>>>>>> parent of dcea838 (add homedashboard)
   customControl = L.Control.extend({
     options: {
       position: 'bottomright'
@@ -129,6 +131,7 @@ export class MapComponent implements OnInit{
       this.heatEvent = false
     }
   }
+
 
   addLegend() {
     this.legend = (L as any).control({ position: 'bottomright' })

@@ -68,12 +68,6 @@ dependencies:
   leaflet:
     specifier: ^1.9.4
     version: 1.9.4
-  leaflet-control-geocoder:
-    specifier: ^1.13.0
-    version: 1.13.0
-  leaflet.heat:
-    specifier: ^0.2.0
-    version: 0.2.0
   mdbootstrap:
     specifier: ^4.20.0
     version: 4.20.0
@@ -86,15 +80,9 @@ dependencies:
   pdfmake:
     specifier: ^0.2.7
     version: 0.2.7
-  pnpm:
-    specifier: ^8.10.5
-    version: 8.10.5
   rxjs:
     specifier: ~7.8.0
     version: 7.8.0
-  sweetalert2:
-    specifier: ^11.10.1
-    version: 11.10.1
   tslib:
     specifier: ^2.3.0
     version: 2.3.0
@@ -6461,16 +6449,6 @@ packages:
       shell-quote: 1.8.1
     dev: true
 
-  /leaflet-control-geocoder@1.13.0:
-    resolution: {integrity: sha512-mgYGx/2WA5CcvhP+IJtw7VvJwSGAe5zxX+TKe6ruYkLj2W5I5V/K/nQiLvsUtqifBojBGoKIPNZ8m0mXJNIudg==}
-    optionalDependencies:
-      open-location-code: 1.0.3
-    dev: false
-
-  /leaflet.heat@0.2.0:
-    resolution: {integrity: sha512-Cd5PbAA/rX3X3XKxfDoUGi9qp78FyhWYurFg3nsfhntcM/MCNK08pRkf4iEenO1KNqwVPKCmkyktjW3UD+h9bQ==}
-    dev: false
-
   /leaflet@1.9.4:
     resolution: {integrity: sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==}
     dev: false
@@ -7230,12 +7208,6 @@ packages:
       mimic-fn: 2.1.0
     dev: true
 
-  /open-location-code@1.0.3:
-    resolution: {integrity: sha512-DBm14BSn40Ee241n80zIFXIT6+y8Tb0I+jTdosLJ8Sidvr2qONvymwqymVbHV2nS+1gkDZ5eTNpnOIVV0Kn2fw==}
-    requiresBuild: true
-    dev: false
-    optional: true
-
   /open@8.4.2:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
     engines: {node: '>=12'}
@@ -7504,12 +7476,6 @@ packages:
 
   /png-js@1.0.0:
     resolution: {integrity: sha512-k+YsbhpA9e+EFfKjTCH3VW6aoKlyNYI6NYdTfDL4CIvFnvsuO84ttonmZE7rc+v23SLTH8XX+5w/Ak9v0xGY4g==}
-    dev: false
-
-  /pnpm@8.10.5:
-    resolution: {integrity: sha512-nBYfQz2FVRxY8bOhCxjMPfcrWgLSyu5lZswFtvIK3e+UfnldkMOQM7+S3lUXfq1p2H9iqdqtyR56LjtY9JNToA==}
-    engines: {node: '>=16.14'}
-    hasBin: true
     dev: false
 
   /postcss-import@15.1.0(postcss@8.4.31):
@@ -8677,10 +8643,6 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
-
-  /sweetalert2@11.10.1:
-    resolution: {integrity: sha512-qu145oBuFfjYr5yZW9OSdG6YmRxDf8CnkgT/sXMfrXGe+asFy2imC2vlaLQ/L/naZ/JZna1MPAY56G4qYM0VUQ==}
-    dev: false
 
   /symbol-observable@4.0.0:
     resolution: {integrity: sha512-b19dMThMV4HVFynSAM1++gBHAbk2Tc/osgLIBZMKsyqh34jb2e8Os7T6ZW/Bt3pJFdBTd2JwAnAAEQV7rSNvcQ==}

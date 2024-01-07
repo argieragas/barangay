@@ -20,9 +20,9 @@ export class PageComponent {
     this.routerEvents = this.router.events.subscribe(
       (event:any)=>{
         if(event instanceof NavigationEnd){
-          if(event.url != "/user"){
-            var str = event.url.substring(1).split('/')
-            this.pageTitle = str[1].charAt(0).toUpperCase() + str[1].slice(1)
+          if(event.url != "/"){
+            var str = event.url.substring(1)
+            this.pageTitle = str.charAt(0).toUpperCase() + str.slice(1)
           }
           this.url = event.url
         }

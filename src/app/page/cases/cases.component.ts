@@ -6,9 +6,8 @@ import { CaseDialogComponent } from '../case-dialog/case-dialog.component';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { CaseData } from 'src/utils/data';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { ServiceData } from 'src/app/client/servicedata.client';
-import {formatDate} from '@angular/common';
 
 export interface PeriodicElement {
   no: number;
@@ -28,15 +27,7 @@ export interface PeriodicElement {
 export class CasesComponent {
   caseData: CaseData[] = []
   dataSource: any
-  data = JSON.parse(localStorage.getItem('token'))
-  displayedColumns: string[] = []
-
   ngOnInit(){
-    if(this.data.user.position == 'unknown'){
-      this.displayedColumns = ['no', 'title', 'complainant', 'complaint', 'schedule', 'status', 'remarks', 'action']
-    }else{
-      this.displayedColumns = ['no', 'title', 'complainant', 'complaint', 'schedule', 'status', 'remarks']
-    }
     this.getCase()
   }
   @ViewChild(MatPaginator) paginator: any;
@@ -106,7 +97,7 @@ export class CasesComponent {
         },
       }
     }
-    pdfMake.createPdf(docDefinition).download(`Case file ${formatDate(new Date(), 'yyyy/MM/dd', 'en')}`)
+    pdfMake.createPdf(docDefinition).download();
   }
 
   table(){
@@ -119,7 +110,7 @@ export class CasesComponent {
           [
             {
               rowSpan: 2,
-              text: 'Case No.',
+              text: 'No.',
               style: 'tableHeader'
             },
             {
@@ -133,7 +124,7 @@ export class CasesComponent {
               style: 'tableHeader'
             }, {},
             {
-              text: 'Complaint',
+              text: 'Complainant',
               colSpan: 3,
               style: 'tableHeader'
             }, {},{},
@@ -172,13 +163,11 @@ export class CasesComponent {
           ],
           ...this.caseData.map(ed => {
             return [
-              ed.id,
-              ed.title,
+              ed.id, ed.title,
               ed.complainantlName+' '+ed.complainantfName+' '+ed.complainantmName,
-              ed.complainantAddress,
-              ed.complaintlName+' '+ed.complaintfName+' '+ed.complaintmName,
-              ed.complaintAddress,
-              ed.details,
+              ed.schedule,
+              ed.status,
+              ed.remark,
               ed.schedule,
               ed.status
             ]
@@ -197,6 +186,9 @@ export class CasesComponent {
       this.getCase()
     });
   }
+
+  displayedColumns: string[] = ['no', 'title', 'complainant', 'complaint', 'schedule', 'status', 'remarks', 'action'];
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

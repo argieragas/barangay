@@ -21,7 +21,7 @@ export class AuthenticationService {
     this.authenticationClient.login(data).subscribe(
       (token) => {
         localStorage.setItem(this.tokenKey, token);
-        this.router.navigate(['/user']);
+        this.router.navigate(['/']);
       },
       (error) => {
         this.showAlert('warning', error.statusText,'The password you entered is incorrect')
@@ -42,7 +42,7 @@ export class AuthenticationService {
       .register(data)
       .subscribe((token) => {
         localStorage.setItem(this.tokenKey, token);
-        this.router.navigate(['/user']);
+        this.router.navigate(['/']);
       });
   }
 

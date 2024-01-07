@@ -7,19 +7,14 @@ import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { PageModule } from './page/page.module';
-import { HomeComponent } from './home/home.component';
-import { HomedashboardComponent } from './home/homedashboard/homedashboard.component';
-import { HomemapComponent } from './home/homemap/homemap.component';
-import { HomeModule } from './home/home.module';
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AuthModule,
-    HomeModule,
     PageModule,
     HttpClientModule,
     BrowserAnimationsModule
